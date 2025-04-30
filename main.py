@@ -1,11 +1,20 @@
+from stats import get_num_words
+
+
 def sort_on(dict):
     return dict["count"]
 
 
 def main():
-    with open("./books/frankenstein.txt") as f:
+    # if len(sys.argv) < 2:
+    #     print("Usage: python3 main.py <path_to_book>")
+    #     sys.exit(1)
+
+    # book_path = sys.argv[1]
+    book_path = "books/frankenstein.txt"
+    with open(book_path) as f:
         file_content = f.read().lower()
-        num_words = len(file_content.split())
+        num_words = get_num_words(file_content)
 
         # Count the number of times each char occours
         content_dict = {}
@@ -26,13 +35,16 @@ def main():
         list_of_dicts.sort(reverse=True, key=sort_on)
 
         # Print a summary
-        print("--- Begin report of books/frankenstein.txt ---")
-        print(f"{num_words} words found in the document \n\n")
-
+        print("============ BOOKBOT ============")
+        # print(f"Analyzing book found at {sys.argv[1]}")
+        print("----------- Word Count ----------")
+        print(f"{num_words} words found in the document")
+        # print(f"Found {num_words} total words")
+        print("--------- Character Count -------")
         for i in list_of_dicts:
-            print(f"The '{i["char"]}' character was found {i["count"]} times")
+            print(f"{i['char']}: {i['count']}")
 
-        print("--- END REPORT ---")
+        print("============= END ===============")
 
 
 main()
